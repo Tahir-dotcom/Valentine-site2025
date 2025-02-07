@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine?</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Homemade+Apple&display=swap');
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #fff5f5;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            font-size: 2em;
+        }
+
+        .buttons {
+            position: relative;
+            display: flex;
+            gap: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        #yes {
+            background-color: #ff5e5e;
+            color: white;
+        }
+
+        #no {
+            background-color: #ccc;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #message {
+            font-family: 'Homemade Apple', cursive;
+            font-size: medium;
+            color: red;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .move-up {
+            transform: translateY(-50px);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Will you be my Valentine? ❤️</h1>
+    <div class="buttons">
+        <button id="yes" onclick="showLove()">Yes</button>
+        <button id="no" onclick="moveNo()">No</button>
+    </div>
+    <p id="message" class="hidden">I love you thank youuuu ❤️ <br>-Tahi</p>
+
+    <script>
+        let noClickCount = 0;
+
+        function moveNo() {
+            let noButton = document.getElementById("no");
+
+            if (noClickCount < 3) {
+                let randomX = Math.floor(Math.random() * 200) - 100;
+                let randomY = Math.floor(Math.random() * 200) - 100;
+                noButton.style.transform = `translate(${randomX}px, ${randomY}px)`;
+            } else if (noClickCount === 3) {
+                noButton.innerText = "You sure?";
+            } else if (noClickCount === 4) {
+                noButton.innerText = "You sure sure?";
+            } else if (noClickCount === 5) {
+                noButton.innerText = "Yes";
+                noButton.style.backgroundColor = "#ff5e5e";
+                noButton.style.color = "white";
+                noButton.onclick = showLove;
+                noButton.classList.add("move-up"); // Move it up to avoid covering text
+            }
+
+            noClickCount++;
+        }
+
+        function showLove() {
+            document.getElementById("message").classList.remove("hidden");
+            confetti({
+                particleCount: 150,
+                spread: 100,
+                origin: { y: 0.6 }
+            });
+        }
+    </script>
+
+</body>
+</html>
